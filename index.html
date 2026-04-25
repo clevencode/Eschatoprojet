@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Eschatologie - Projet</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:FILL@0..1"
+    />
     <link rel="stylesheet" href="./styles/site.css" />
   </head>
   <body>
@@ -42,7 +46,9 @@
         aria-label="Ecouter l'audio"
         aria-pressed="false"
       >
-        <span class="audio-icon" aria-hidden="true">&#9658;</span>
+        <span class="material-symbols-rounded audio-icon" aria-hidden="true"
+          >play_arrow</span
+        >
         <span class="audio-content">
           <span class="audio-label">Écouter l'audio</span>
           <span class="audio-meta">
@@ -57,10 +63,20 @@
         </span>
       </button>
       <div class="map-controls" aria-label="Contrôles de zoom">
-        <button id="map-zoom-in" type="button" aria-label="Zoom avant">+</button>
-        <button id="map-zoom-out" type="button" aria-label="Zoom arrière">-</button>
+        <button id="map-zoom-in" type="button" aria-label="Zoom avant">
+          <span class="material-symbols-rounded ui-icon" aria-hidden="true"
+            >add</span
+          >
+        </button>
+        <button id="map-zoom-out" type="button" aria-label="Zoom arrière">
+          <span class="material-symbols-rounded ui-icon" aria-hidden="true"
+            >remove</span
+          >
+        </button>
         <button id="map-reset" type="button" aria-label="Reinitialiser la vue">
-          <span aria-hidden="true">&#8635;</span>
+          <span class="material-symbols-rounded ui-icon" aria-hidden="true"
+            >restart_alt</span
+          >
         </button>
       </div>
     </div>
@@ -71,7 +87,10 @@
       aria-label="Description du projet"
       title="Ouvrir la description du projet"
     >
-      <span aria-hidden="true">?</span> Description
+      <span class="material-symbols-rounded ui-icon" aria-hidden="true"
+        >description</span
+      >
+      Description
     </button>
 
     <div id="info-modal" class="info-modal" aria-hidden="true">
@@ -90,7 +109,9 @@
             type="button"
             aria-label="Fermer la fenêtre"
           >
-            ×
+            <span class="material-symbols-rounded ui-icon" aria-hidden="true"
+              >close</span
+            >
           </button>
         </header>
         <div id="info-modal-content" class="info-modal-content"></div>

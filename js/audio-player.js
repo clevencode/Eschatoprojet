@@ -37,7 +37,7 @@
   function setIdle() {
     button.classList.remove("is-playing");
     button.setAttribute("aria-pressed", "false");
-    if (icon) icon.textContent = "▶";
+    if (icon) icon.textContent = "play_arrow";
     if (label) label.textContent = defaultLabel;
     updateTimeLabel();
   }
@@ -45,14 +45,14 @@
   function setPlaying() {
     button.classList.add("is-playing");
     button.setAttribute("aria-pressed", "true");
-    if (icon) icon.textContent = "⏸";
+    if (icon) icon.textContent = "pause";
     if (label) label.textContent = "Pause audio";
     updateTimeLabel();
     showFeedback("Lecture audio en cours", "success");
   }
 
   function setErrorState(message) {
-    if (icon) icon.textContent = "!";
+    if (icon) icon.textContent = "error";
     if (label) label.textContent = message || "Audio indisponible";
     updateTimeLabel();
     showFeedback(message || "Audio indisponible", "error");
