@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eschatologie - Projet</title>
+    <link rel="stylesheet" href="./styles/site.css" />
+  </head>
+  <body>
+    <div
+      id="map-viewer"
+      class="map-viewer"
+      data-free-pan="true"
+      tabindex="0"
+      role="application"
+      aria-label="Visionneuse zoomable"
+      aria-describedby="viewer-hint viewer-status"
+    >
+      <img
+        id="map-image"
+        src="./assets/images/image.png"
+        data-image-candidates="./assets/images/image.png,./assets/images/ligne-du-temps-prophetique.png"
+        alt="Image principale du projet"
+        decoding="async"
+        fetchpriority="high"
+        draggable="false"
+      />
+    </div>
+    <div id="viewer-hint" class="viewer-hint">
+      Mode carte libre: glisser dans tous les sens · Molette/Pinch: zoom · 0: réinitialiser
+    </div>
+    <p id="viewer-status" class="viewer-status" aria-live="polite"></p>
+
+    <audio
+      id="project-audio"
+      preload="metadata"
+      data-audio-candidates="./apocalips-1.mp3,./assets/audio/apocalips-1.mp3,./assets/audio/eschatologie-audio.mp3"
+    >
+      Votre navigateur ne supporte pas l'audio HTML5.
+    </audio>
+    <button
+      id="audio-toggle"
+      class="floating-audio-ui"
+      type="button"
+      aria-label="Ecouter l'audio"
+      aria-pressed="false"
+      aria-describedby="audio-status"
+    >
+      <span class="audio-icon" aria-hidden="true">&#9658;</span>
+      <span class="audio-label">Écouter l'audio</span>
+    </button>
+    <p id="audio-status" class="audio-status" aria-live="polite"></p>
+
+    <script src="./js/map-viewer.js"></script>
+    <script src="./js/audio-player.js"></script>
+  </body>
+</html>
