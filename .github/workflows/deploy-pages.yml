@@ -3,7 +3,7 @@ name: Deploy static site to GitHub Pages
 on:
   push:
     branches:
-      - devlop
+      - main
   workflow_dispatch:
 
 permissions:
@@ -22,13 +22,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Prepare static site artifact
+        run: |
+          mkdir -p _site
+          cp index.html _site/
+          cp apocalips-1.mp3 _site/
+          cp -R assets _site/assets
+          cp -R js _site/js
+          cp -R styles _site/styles
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
       - name: Upload static artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
 
   deploy:
     needs: build
