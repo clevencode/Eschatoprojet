@@ -1,20 +1,37 @@
 (function () {
   const audio = document.getElementById("project-audio");
   const button = document.getElementById("audio-toggle");
-  const status = document.getElementById("audio-status");
+  const timeLabel = document.getElementById("audio-time");
+  const showFeedback = window.showSiteFeedback || (() => {});
+  const progressFill = document.getElementById("audio-progress-fill");
 
   if (!audio || !button) return;
 
   const icon = button.querySelector(".audio-icon");
   const label = button.querySelector(".audio-label");
   const defaultLabel = "Écouter l'audio";
-  const loadingAudioMessage = "Chargement de l'audio...";
   let resolvedAudioPath = "";
 
-  function setStatus(message, isError = false) {
-    if (!status) return;
-    status.textContent = message;
-    status.classList.toggle("is-error", isError);
+  function formatTime(seconds) {
+    if (!Number.isFinite(seconds) || seconds < 0) return "00:00";
+    const total = Math.floor(seconds);
+    const mins = Math.floor(total / 60);
+    const secs = total % 60;
+    return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+  }
+
+  function updateTimeLabel() {
+    if (!timeLabel) return;
+    const current = formatTime(audio.currentTime || 0);
+    const total = formatTime(audio.duration || 0);
+    timeLabel.textContent = `${current} / ${total}`;
+
+    if (progressFill) {
+      const duration = audio.duration || 0;
+      const progress =
+        duration > 0 ? Math.min(100, (audio.currentTime / duration) * 100) : 0;
+      progressFill.style.width = `${progress}%`;
+    }
   }
 
   function setIdle() {
@@ -22,6 +39,7 @@
     button.setAttribute("aria-pressed", "false");
     if (icon) icon.textContent = "▶";
     if (label) label.textContent = defaultLabel;
+    updateTimeLabel();
   }
 
   function setPlaying() {
@@ -29,12 +47,15 @@
     button.setAttribute("aria-pressed", "true");
     if (icon) icon.textContent = "⏸";
     if (label) label.textContent = "Pause audio";
+    updateTimeLabel();
+    showFeedback("Lecture audio en cours", "success");
   }
 
   function setErrorState(message) {
     if (icon) icon.textContent = "!";
-    if (label) label.textContent = "Audio indisponible";
-    setStatus(message || "Impossible de lire le fichier audio.", true);
+    if (label) label.textContent = message || "Audio indisponible";
+    updateTimeLabel();
+    showFeedback(message || "Audio indisponible", "error");
   }
 
   function getAudioCandidates() {
@@ -72,22 +93,16 @@
 
   button.addEventListener("click", async () => {
     if (audio.paused) {
-      setStatus(loadingAudioMessage);
-
       const sourcePath = await resolveAudioPath();
       if (!sourcePath) {
-        setErrorState(
-          "Fichier audio introuvable. Ajoutez un MP3 dans assets/audio/."
-        );
+        setErrorState("Audio indisponible");
         return;
       }
 
       try {
         await audio.play();
       } catch (_) {
-        setErrorState(
-          "Lecture bloquée. Cliquez encore ou vérifiez le format audio."
-        );
+        setErrorState("Audio indisponible");
       }
     } else {
       audio.pause();
@@ -96,30 +111,26 @@
 
   audio.addEventListener("play", () => {
     setPlaying();
-    setStatus("Lecture en cours.");
   });
+  audio.addEventListener("loadedmetadata", updateTimeLabel);
+  audio.addEventListener("timeupdate", updateTimeLabel);
   audio.addEventListener("pause", () => {
     setIdle();
-    setStatus("Audio en pause.");
+    if (!audio.ended) showFeedback("Audio en pause");
   });
   audio.addEventListener("ended", () => {
     setIdle();
-    setStatus("Lecture terminée.");
+    updateTimeLabel();
+    showFeedback("Lecture terminée");
   });
   audio.addEventListener("error", () => {
     setIdle();
-    setErrorState("Erreur de chargement audio. Vérifiez le fichier MP3.");
+    setErrorState("Audio indisponible");
   });
 
   setIdle();
+  updateTimeLabel();
   resolveAudioPath().then((path) => {
-    if (path) {
-      setStatus("Audio prêt: " + path.replace("./", ""));
-      return;
-    }
-    setStatus(
-      "Aucun fichier audio détecté. Déposez un MP3 dans assets/audio/.",
-      true
-    );
+    if (!path) setErrorState("Audio indisponible");
   });
 })();

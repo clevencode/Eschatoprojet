@@ -14,7 +14,7 @@
       tabindex="0"
       role="application"
       aria-label="Visionneuse zoomable"
-      aria-describedby="viewer-hint viewer-status"
+      aria-describedby="viewer-hint"
     >
       <img
         id="map-image"
@@ -27,9 +27,14 @@
       />
     </div>
     <div id="viewer-hint" class="viewer-hint">
-      Mode carte libre: glisser dans tous les sens · Molette/Pinch: zoom · 0: réinitialiser
+      0: réinitialiser · Infos/Description en bas
     </div>
-    <p id="viewer-status" class="viewer-status" aria-live="polite"></p>
+    <div id="site-feedback" class="site-feedback" aria-live="polite" aria-atomic="true"></div>
+    <div class="map-controls" aria-label="Contrôles de zoom">
+      <button id="map-zoom-in" type="button" aria-label="Zoom avant">+</button>
+      <button id="map-zoom-out" type="button" aria-label="Zoom arrière">-</button>
+      <button id="map-reset" type="button" aria-label="Reinitialiser la vue">Reinit</button>
+    </div>
 
     <audio
       id="project-audio"
@@ -38,20 +43,74 @@
     >
       Votre navigateur ne supporte pas l'audio HTML5.
     </audio>
-    <button
-      id="audio-toggle"
-      class="floating-audio-ui"
-      type="button"
-      aria-label="Ecouter l'audio"
-      aria-pressed="false"
-      aria-describedby="audio-status"
-    >
-      <span class="audio-icon" aria-hidden="true">&#9658;</span>
-      <span class="audio-label">Écouter l'audio</span>
-    </button>
-    <p id="audio-status" class="audio-status" aria-live="polite"></p>
+    <div class="floating-controls">
+      <button
+        class="side-action-btn"
+        type="button"
+        data-panel="flow"
+        aria-label="Informations du flux"
+        title="Ouvrir les informations du fonctionnement"
+      >
+        <span aria-hidden="true">i</span> Infos
+      </button>
+      <button
+        id="audio-toggle"
+        class="floating-audio-ui"
+        type="button"
+        aria-label="Ecouter l'audio"
+        aria-pressed="false"
+      >
+        <span class="audio-icon" aria-hidden="true">&#9658;</span>
+        <span class="audio-content">
+          <span class="audio-label">Écouter l'audio</span>
+          <span class="audio-meta">
+            <span class="audio-wave" aria-hidden="true">
+              <span></span><span></span><span></span><span></span>
+            </span>
+            <span id="audio-time" class="audio-time">00:00 / 00:00</span>
+          </span>
+          <span class="audio-progress" aria-hidden="true">
+            <span id="audio-progress-fill"></span>
+          </span>
+        </span>
+      </button>
+      <button
+        class="side-action-btn"
+        type="button"
+        data-panel="project"
+        aria-label="Description du projet"
+        title="Ouvrir la description du projet"
+      >
+        <span aria-hidden="true">?</span> Description
+      </button>
+    </div>
 
+    <div id="info-modal" class="info-modal" aria-hidden="true">
+      <div class="info-modal-backdrop" data-close-modal="true"></div>
+      <section
+        class="info-modal-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="info-modal-title"
+      >
+        <header class="info-modal-header">
+          <h2 id="info-modal-title"></h2>
+          <button
+            id="info-modal-close"
+            class="info-modal-close"
+            type="button"
+            aria-label="Fermer la fenêtre"
+          >
+            ×
+          </button>
+        </header>
+        <div id="info-modal-content" class="info-modal-content"></div>
+      </section>
+    </div>
+
+    <script src="./js/ui-feedback.js"></script>
     <script src="./js/map-viewer.js"></script>
     <script src="./js/audio-player.js"></script>
+    <script src="./js/info-panels.js"></script>
   </body>
 </html>

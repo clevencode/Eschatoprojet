@@ -3,7 +3,10 @@
 
   const container = document.getElementById("map-viewer");
   const image = document.getElementById("map-image");
-  const viewerStatus = document.getElementById("viewer-status");
+  const showFeedback = window.showSiteFeedback || (() => {});
+  const zoomInBtn = document.getElementById("map-zoom-in");
+  const zoomOutBtn = document.getElementById("map-zoom-out");
+  const resetBtn = document.getElementById("map-reset");
 
   if (!container || !image) return;
   const isFreePanEnabled = container.dataset.freePan !== "false";
@@ -27,12 +30,6 @@
   const imageCandidates = [];
   let currentImageIndex = 0;
   const zoomFromCenter = true;
-
-  function setViewerStatus(message, isError = false) {
-    if (!viewerStatus) return;
-    viewerStatus.textContent = message;
-    viewerStatus.classList.toggle("is-error", isError);
-  }
 
   function clamp(value, min, max) {
     return Math.min(max, Math.max(min, value));
@@ -99,11 +96,19 @@
     applyTransform();
   }
 
+  function zoomAtCenter(deltaScale) {
+    const rect = container.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    zoomAt(centerX, centerY, deltaScale);
+  }
+
   function resetView() {
     scale = Math.max(minScale, initialScale);
     translateX = 0;
     translateY = 0;
     applyTransform();
+    showFeedback("Vue recentrée");
   }
 
   function getImageCandidates() {
@@ -116,12 +121,10 @@
 
   function loadImageByIndex(index) {
     if (index < 0 || index >= imageCandidates.length) {
-      setViewerStatus("Aucune image valide trouvée.", true);
       return;
     }
     currentImageIndex = index;
     image.setAttribute("src", imageCandidates[currentImageIndex]);
-    setViewerStatus("Chargement de l'image...");
   }
 
   function getPointerDistance() {
@@ -223,6 +226,24 @@
     { passive: false }
   );
 
+  if (zoomInBtn) {
+    zoomInBtn.addEventListener("click", () => {
+      zoomAtCenter(1.15);
+      showFeedback("Zoom avant");
+    });
+  }
+
+  if (zoomOutBtn) {
+    zoomOutBtn.addEventListener("click", () => {
+      zoomAtCenter(0.87);
+      showFeedback("Zoom arrière");
+    });
+  }
+
+  if (resetBtn) {
+    resetBtn.addEventListener("click", resetView);
+  }
+
   container.addEventListener("dblclick", (event) => {
     const rect = container.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
@@ -270,19 +291,15 @@
 
   image.addEventListener("load", () => {
     fitToScreen();
-    setViewerStatus(
-      (isFreePanEnabled ? "Mode carte libre actif · " : "") +
-        "Image chargée: " +
-        (image.getAttribute("src") || "").replace("./", "")
-    );
   });
   image.addEventListener("error", () => {
     const nextIndex = currentImageIndex + 1;
     if (nextIndex < imageCandidates.length) {
       loadImageByIndex(nextIndex);
+      showFeedback("Image de secours chargée");
       return;
     }
-    setViewerStatus("Impossible de charger l'image.", true);
+    showFeedback("Impossible de charger l'image", "error");
   });
   window.addEventListener("resize", fitToScreen);
 
@@ -295,7 +312,6 @@
   imageCandidates.push(...parsedCandidates);
 
   if (imageCandidates.length === 0) {
-    setViewerStatus("Aucune image configurée.", true);
     return;
   }
 
