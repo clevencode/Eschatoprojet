@@ -30,10 +30,10 @@
       html: `
         <p><strong>Auteur:</strong> Clevenider Petit</p>
         <p><strong>Date du projet:</strong> 25/04/2026</p>
-        <p>A Dieu seul soit la gloire, l'Auteur de toute sagesse, et a son Fils Jesus-Christ, qui accorde l'intelligence aux simples.</p>
-        <p>Le present projet a ete elabore dans le but de presenter de facon ordonnee et pedagogique le cours d'Eschatologie dispense par le Doyen et Apotre Garry Blaise.</p>
-        <p>Ce travail constitue une methodologie permettant a l'etudiant, par la grace de Dieu, de demontrer sa comprehension et sa maitrise des enseignements recus.</p>
-        <p>La methode adoptee repose sur une organisation chronologique et textuelle de l'Eschatologie, appuyee par l'utilisation de l'intelligence artificielle pour generer des illustrations destinees a la realisation d'un audio explicative sur ce theme.</p>
+        <p>À Dieu seul soit la gloire, l'Auteur de toute sagesse, et à son Fils Jésus-Christ, qui accorde l'intelligence aux simples.</p>
+        <p>Le présent projet a été élaboré dans le but de présenter de façon ordonnée et pédagogique le cours d'Eschatologie dispensé par le Doyen et l'Apôtre Garry Blaise.</p>
+        <p>Ce travail constitue une méthodologie permettant à l'étudiant, par la grâce de Dieu, de démontrer sa compréhension et sa maîtrise des enseignements reçus.</p>
+        <p>La méthode adoptée repose sur une organisation chronologique et textuelle de l'Eschatologie, appuyée par l'utilisation de l'intelligence artificielle pour générer des illustrations destinées à la réalisation d'un audio explicatif sur ce thème.</p>
       `,
     },
   };
