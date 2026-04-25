@@ -37,7 +37,7 @@ body {
 }
 
 .map-viewer:focus-visible {
-  box-shadow: inset 0 0 0 2px rgba(56, 189, 248, 0.85);
+  box-shadow: inset 0 0 0 2px rgba(203, 213, 225, 0.55);
 }
 
 .viewer-hint {
@@ -49,9 +49,9 @@ body {
   padding: 0.4rem 0.7rem;
   border-radius: 999px;
   font-size: 0.82rem;
-  color: #e2e8f0;
-  background: rgba(15, 23, 42, 0.38);
-  border: 1px solid rgba(148, 163, 184, 0.3);
+  color: #e5e7eb;
+  background: rgba(24, 24, 27, 0.42);
+  border: 1px solid rgba(161, 161, 170, 0.28);
   backdrop-filter: blur(10px) saturate(120%);
   -webkit-backdrop-filter: blur(10px) saturate(120%);
   pointer-events: none;
@@ -67,9 +67,9 @@ body {
   padding: 0.5rem 0.75rem;
   border-radius: 999px;
   font-size: 0.82rem;
-  color: #e2e8f0;
-  border: 1px solid rgba(148, 163, 184, 0.3);
-  background: rgba(15, 23, 42, 0.5);
+  color: #e5e7eb;
+  border: 1px solid rgba(161, 161, 170, 0.3);
+  background: rgba(24, 24, 27, 0.52);
   backdrop-filter: blur(10px) saturate(120%);
   -webkit-backdrop-filter: blur(10px) saturate(120%);
   box-shadow: 0 10px 26px rgba(2, 6, 23, 0.45);
@@ -84,7 +84,7 @@ body {
 }
 
 .site-feedback.is-success {
-  border-color: rgba(45, 212, 191, 0.38);
+  border-color: rgba(212, 212, 216, 0.42);
 }
 
 .site-feedback.is-error {
@@ -103,9 +103,9 @@ body {
 }
 
 .map-controls button {
-  border: 1px solid rgba(148, 163, 184, 0.35);
-  background: rgba(15, 23, 42, 0.5);
-  color: #e2e8f0;
+  border: 1px solid rgba(161, 161, 170, 0.35);
+  background: rgba(24, 24, 27, 0.56);
+  color: #e5e7eb;
   border-radius: 10px;
   min-width: 40px;
   height: 40px;
@@ -165,9 +165,9 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  border: 1px solid rgba(148, 163, 184, 0.3);
-  background: rgba(15, 23, 42, 0.36);
-  color: #e2e8f0;
+  border: 1px solid rgba(161, 161, 170, 0.3);
+  background: rgba(24, 24, 27, 0.42);
+  color: #e5e7eb;
   border-radius: 999px;
   padding: 0.65rem 0.85rem;
   font-size: 0.78rem;
@@ -184,7 +184,7 @@ body {
 
 .side-action-btn:focus-visible,
 .floating-audio-ui:focus-visible {
-  outline: 2px solid rgba(56, 189, 248, 0.75);
+  outline: 2px solid rgba(212, 212, 216, 0.65);
   outline-offset: 2px;
 }
 
@@ -196,9 +196,9 @@ body {
   border: 0;
   border-radius: 999px;
   padding: 0.7rem 1rem 0.7rem 0.75rem;
-  color: #e2e8f0;
-  background: rgba(15, 23, 42, 0.36);
-  border: 1px solid rgba(148, 163, 184, 0.32);
+  color: #e5e7eb;
+  background: rgba(24, 24, 27, 0.42);
+  border: 1px solid rgba(161, 161, 170, 0.32);
   backdrop-filter: blur(10px) saturate(120%);
   -webkit-backdrop-filter: blur(10px) saturate(120%);
   box-shadow: 0 10px 24px rgba(2, 6, 23, 0.32);
@@ -211,8 +211,8 @@ body {
 }
 
 .floating-audio-ui.is-playing {
-  background: rgba(15, 118, 110, 0.34);
-  border-color: rgba(45, 212, 191, 0.35);
+  background: rgba(39, 39, 42, 0.52);
+  border-color: rgba(212, 212, 216, 0.35);
 }
 
 .audio-icon {
@@ -304,11 +304,17 @@ body {
   position: fixed;
   inset: 0;
   z-index: 1200;
-  display: none;
+  display: block;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
 }
 
 .info-modal.is-open {
-  display: block;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
 .info-modal-backdrop {
@@ -317,6 +323,12 @@ body {
   background: rgba(2, 6, 23, 0.62);
   backdrop-filter: blur(3px);
   -webkit-backdrop-filter: blur(3px);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.info-modal.is-open .info-modal-backdrop {
+  opacity: 1;
 }
 
 .info-modal-card {
@@ -327,12 +339,21 @@ body {
   width: min(720px, calc(100vw - 1.5rem));
   max-height: min(78dvh, 760px);
   border-radius: 16px;
-  border: 1px solid rgba(148, 163, 184, 0.32);
-  background: rgba(15, 23, 42, 0.82);
+  border: 1px solid rgba(161, 161, 170, 0.34);
+  background: rgba(24, 24, 27, 0.74);
+  backdrop-filter: blur(14px) saturate(125%);
+  -webkit-backdrop-filter: blur(14px) saturate(125%);
   color: #e2e8f0;
   box-shadow: 0 22px 50px rgba(2, 6, 23, 0.55);
   display: flex;
   flex-direction: column;
+  opacity: 0;
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+
+.info-modal.is-open .info-modal-card {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
 }
 
 .info-modal-header {
@@ -341,7 +362,10 @@ body {
   align-items: center;
   gap: 1rem;
   padding: 0.9rem 1rem;
-  border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+  border-bottom: 1px solid rgba(161, 161, 170, 0.22);
+  background: rgba(24, 24, 27, 0.48);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .info-modal-header h2 {
@@ -350,31 +374,50 @@ body {
 }
 
 .info-modal-close {
-  border: 1px solid rgba(148, 163, 184, 0.35);
-  background: rgba(30, 41, 59, 0.72);
-  color: #e2e8f0;
+  border: 1px solid rgba(161, 161, 170, 0.34);
+  background: rgba(39, 39, 42, 0.74);
+  color: #e5e7eb;
   border-radius: 10px;
   width: 32px;
   height: 32px;
   font-size: 1.2rem;
   line-height: 1;
   cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease,
+    background 0.15s ease;
+}
+
+.info-modal-close:hover {
+  transform: translateY(-1px);
+  border-color: rgba(212, 212, 216, 0.55);
+  background: rgba(63, 63, 70, 0.9);
+}
+
+.info-modal-close:focus-visible {
+  outline: 2px solid rgba(212, 212, 216, 0.65);
+  outline-offset: 2px;
 }
 
 .info-modal-content {
   overflow: auto;
-  padding: 1rem;
-  line-height: 1.6;
+  padding: 1rem 1rem 1.1rem;
+  line-height: 1.65;
   font-size: 0.95rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.45) transparent;
 }
 
 .info-modal-content p {
-  margin: 0.6rem 0;
+  margin: 0.65rem 0;
 }
 
 .info-modal-content ul {
-  margin: 0.5rem 0 0.8rem;
+  margin: 0.55rem 0 0.85rem;
   padding-left: 1.2rem;
+}
+
+.info-modal-content li {
+  margin-bottom: 0.35rem;
 }
 
 @media (max-width: 768px) {

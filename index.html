@@ -14,7 +14,6 @@
       tabindex="0"
       role="application"
       aria-label="Visionneuse zoomable"
-      aria-describedby="viewer-hint"
     >
       <img
         id="map-image"
@@ -25,9 +24,6 @@
         fetchpriority="high"
         draggable="false"
       />
-    </div>
-    <div id="viewer-hint" class="viewer-hint">
-      0: réinitialiser · Infos/Description en bas
     </div>
     <div id="site-feedback" class="site-feedback" aria-live="polite" aria-atomic="true"></div>
     <div class="map-controls" aria-label="Contrôles de zoom">
@@ -44,15 +40,6 @@
       Votre navigateur ne supporte pas l'audio HTML5.
     </audio>
     <div class="floating-controls">
-      <button
-        class="side-action-btn"
-        type="button"
-        data-panel="flow"
-        aria-label="Informations du flux"
-        title="Ouvrir les informations du fonctionnement"
-      >
-        <span aria-hidden="true">i</span> Infos
-      </button>
       <button
         id="audio-toggle"
         class="floating-audio-ui"
