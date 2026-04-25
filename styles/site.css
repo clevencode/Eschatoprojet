@@ -14,16 +14,19 @@ body {
 :root {
   --apple-font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
     "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --glass-border: 1px solid rgba(228, 228, 231, 0.26);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.3);
   --glass-bg:
-    radial-gradient(140% 120% at 20% -10%, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0) 58%),
-    linear-gradient(135deg, rgba(63, 63, 70, 0.58) 0%, rgba(39, 39, 42, 0.5) 55%, rgba(24, 24, 27, 0.62) 100%);
-  --glass-blur: blur(18px) saturate(145%);
+    radial-gradient(180% 130% at 18% -16%, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0.08) 36%, rgba(255, 255, 255, 0) 66%),
+    linear-gradient(140deg, rgba(71, 85, 105, 0.4) 0%, rgba(39, 39, 42, 0.44) 52%, rgba(15, 23, 42, 0.58) 100%);
+  --glass-blur: blur(22px) saturate(165%);
   --glass-shadow:
-    0 14px 32px rgba(2, 6, 23, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.26),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.06);
+    0 22px 44px rgba(2, 6, 23, 0.5),
+    0 4px 14px rgba(15, 23, 42, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.1);
   --glass-text: #f3f4f6;
+  --map-control-size: clamp(52px, 7vw, 56px);
+  --map-control-icon-size: clamp(1.02rem, 1.8vw, 1.1rem);
 }
 
 .material-icons-round {
@@ -107,6 +110,94 @@ body {
   background: rgba(127, 29, 29, 0.45);
 }
 
+.viewer-tutorial {
+  position: fixed;
+  inset: 0;
+  z-index: 1250;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.viewer-tutorial.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.viewer-tutorial-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.56);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.viewer-tutorial-card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(460px, calc(100vw - 1.3rem));
+  border-radius: 18px;
+  border: var(--glass-border);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
+  color: var(--glass-text);
+  padding: 1rem 1rem 0.9rem;
+}
+
+.viewer-tutorial-card h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+  letter-spacing: -0.012em;
+}
+
+.viewer-tutorial-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.viewer-tutorial-list li {
+  display: grid;
+  grid-template-columns: 1.25rem 1fr;
+  align-items: start;
+  gap: 0.45rem;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.viewer-tutorial-remember {
+  margin-top: 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
+  font-size: 0.82rem;
+  color: rgba(244, 244, 245, 0.9);
+}
+
+.viewer-tutorial-btn {
+  margin-top: 0.85rem;
+  width: 100%;
+  border: var(--glass-border);
+  background: var(--glass-bg);
+  color: var(--glass-text);
+  border-radius: 12px;
+  min-height: 42px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
+}
+
 .map-controls {
   position: fixed;
   right: max(0.75rem, env(safe-area-inset-right));
@@ -123,8 +214,8 @@ body {
   background: var(--glass-bg);
   color: var(--glass-text);
   border-radius: 50%;
-  min-width: 56px;
-  height: 56px;
+  min-width: var(--map-control-size);
+  height: var(--map-control-size);
   padding: 0;
   font-size: 1rem;
   font-weight: 600;
@@ -136,6 +227,11 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.map-controls .ui-icon {
+  font-size: var(--map-control-icon-size);
 }
 
 .map-controls button:last-child {
@@ -144,6 +240,11 @@ body {
 
 .map-controls button:hover {
   transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.42);
+  box-shadow:
+    0 24px 42px rgba(2, 6, 23, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.13);
 }
 
 .floating-controls {
@@ -177,6 +278,7 @@ body {
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
   box-shadow: var(--glass-shadow);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .ui-icon {
@@ -192,6 +294,11 @@ body {
 
 .side-action-btn:hover {
   transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.42);
+  box-shadow:
+    0 24px 42px rgba(2, 6, 23, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.13);
 }
 
 .side-action-btn:focus-visible,
@@ -226,8 +333,10 @@ body {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: linear-gradient(120deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.02) 35%, rgba(255, 255, 255, 0) 65%);
-  opacity: 0.7;
+  background:
+    radial-gradient(120% 80% at 14% 0%, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0.08) 34%, rgba(255, 255, 255, 0) 62%),
+    linear-gradient(120deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.04) 35%, rgba(255, 255, 255, 0) 68%);
+  opacity: 0.85;
 }
 
 .floating-audio-ui:hover {
@@ -397,6 +506,7 @@ body {
   flex-direction: column;
   opacity: 0;
   transition: opacity 0.22s ease, transform 0.22s ease;
+  overflow: hidden;
 }
 
 .info-modal.is-open .info-modal-card {
@@ -495,15 +605,18 @@ body {
     gap: 0.36rem;
   }
 
-  .map-controls button {
-    min-width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    padding: 0;
+  .viewer-tutorial-card {
+    width: calc(100vw - 1rem);
+    border-radius: 16px;
+    padding: 0.9rem 0.9rem 0.82rem;
   }
 
-  .map-controls .ui-icon {
-    font-size: 1.05rem;
+  .viewer-tutorial-card h2 {
+    font-size: 0.94rem;
+  }
+
+  .viewer-tutorial-list li {
+    font-size: 0.84rem;
   }
 
   .floating-audio-ui {

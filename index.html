@@ -4,6 +4,33 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Eschatologie - Projet</title>
+    <meta
+      name="description"
+      content="Projet de visualisation de la ligne du temps prophetique, presente de facon ordonnee et pedagogique pour accompagner le cours d'Eschatologie du Doyen et Apotre Garry Blaise."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Eschatologie - Projet" />
+    <meta property="og:title" content="Eschatologie - Projet" />
+    <meta
+      property="og:description"
+      content="Projet de visualisation de la ligne du temps prophetique, presente de facon ordonnee et pedagogique pour accompagner le cours d'Eschatologie du Doyen et Apotre Garry Blaise."
+    />
+    <meta property="og:url" content="https://clevencode.github.io/Eschatoprojet/" />
+    <meta
+      property="og:image"
+      content="https://clevencode.github.io/Eschatoprojet/assets/images/image.png"
+    />
+    <meta property="og:image:alt" content="Ligne du temps prophetique du projet Eschatologie." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Eschatologie - Projet" />
+    <meta
+      name="twitter:description"
+      content="Projet de visualisation de la ligne du temps prophetique, presente de facon ordonnee et pedagogique pour accompagner le cours d'Eschatologie du Doyen et Apotre Garry Blaise."
+    />
+    <meta
+      name="twitter:image"
+      content="https://clevencode.github.io/Eschatoprojet/assets/images/image.png"
+    />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/icon?family=Material+Icons+Round"
@@ -30,6 +57,40 @@
       />
     </div>
     <div id="site-feedback" class="site-feedback" aria-live="polite" aria-atomic="true"></div>
+    <div
+      id="viewer-tutorial"
+      class="viewer-tutorial"
+      aria-hidden="true"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="viewer-tutorial-title"
+    >
+      <div class="viewer-tutorial-backdrop" data-close-tutorial="true"></div>
+      <section class="viewer-tutorial-card">
+        <h2 id="viewer-tutorial-title">Comment utiliser l'image</h2>
+        <ul class="viewer-tutorial-list">
+          <li>
+            <span class="material-icons-round ui-icon" aria-hidden="true">open_with</span>
+            Touchez l'image et faites-la glisser avec un doigt (ou avec la souris) pour la deplacer.
+          </li>
+          <li>
+            <span class="material-icons-round ui-icon" aria-hidden="true">pinch</span>
+            Pour zoomer sur mobile, posez deux doigts sur l'ecran puis ecartez-les. Sur ordinateur, utilisez la molette de la souris.
+          </li>
+          <li>
+            <span class="material-icons-round ui-icon" aria-hidden="true">restart_alt</span>
+            Appuyez sur le bouton reset pour remettre l'image au centre.
+          </li>
+        </ul>
+        <label class="viewer-tutorial-remember">
+          <input id="viewer-tutorial-hide" type="checkbox" />
+          Ne plus montrer ce guide
+        </label>
+        <button id="viewer-tutorial-close" class="viewer-tutorial-btn" type="button">
+          J'ai compris
+        </button>
+      </section>
+    </div>
 
     <audio
       id="project-audio"

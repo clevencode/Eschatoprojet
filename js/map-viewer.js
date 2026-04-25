@@ -7,6 +7,10 @@
   const zoomInBtn = document.getElementById("map-zoom-in");
   const zoomOutBtn = document.getElementById("map-zoom-out");
   const resetBtn = document.getElementById("map-reset");
+  const tutorialModal = document.getElementById("viewer-tutorial");
+  const tutorialCloseBtn = document.getElementById("viewer-tutorial-close");
+  const tutorialHideCheckbox = document.getElementById("viewer-tutorial-hide");
+  const TUTORIAL_DISMISSED_KEY = "eschatologie_viewer_tutorial_hidden_v1";
 
   if (!container || !image) return;
   const isFreePanEnabled = container.dataset.freePan !== "false";
@@ -109,6 +113,37 @@
     translateY = 0;
     applyTransform();
     showFeedback("Vue recentrée");
+  }
+
+  function openTutorial() {
+    if (!tutorialModal) return;
+    tutorialModal.classList.add("is-open");
+    tutorialModal.setAttribute("aria-hidden", "false");
+    if (tutorialCloseBtn) tutorialCloseBtn.focus();
+  }
+
+  function closeTutorial() {
+    if (!tutorialModal) return;
+    tutorialModal.classList.remove("is-open");
+    tutorialModal.setAttribute("aria-hidden", "true");
+
+    if (tutorialHideCheckbox && tutorialHideCheckbox.checked) {
+      try {
+        localStorage.setItem(TUTORIAL_DISMISSED_KEY, "1");
+      } catch (_) {
+        // Ignore storage restrictions.
+      }
+    }
+    container.focus();
+  }
+
+  function shouldShowTutorial() {
+    if (!tutorialModal) return false;
+    try {
+      return localStorage.getItem(TUTORIAL_DISMISSED_KEY) !== "1";
+    } catch (_) {
+      return true;
+    }
   }
 
   function getImageCandidates() {
@@ -244,6 +279,22 @@
     resetBtn.addEventListener("click", resetView);
   }
 
+  if (tutorialCloseBtn) {
+    tutorialCloseBtn.addEventListener("click", closeTutorial);
+  }
+
+  if (tutorialModal) {
+    tutorialModal.addEventListener("click", (event) => {
+      const target = event.target;
+      if (
+        target instanceof HTMLElement &&
+        target.dataset.closeTutorial === "true"
+      ) {
+        closeTutorial();
+      }
+    });
+  }
+
   container.addEventListener("dblclick", (event) => {
     const rect = container.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
@@ -258,6 +309,14 @@
   });
 
   container.addEventListener("keydown", (event) => {
+    if (tutorialModal && tutorialModal.classList.contains("is-open")) {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeTutorial();
+      }
+      return;
+    }
+
     const centerX = window.innerWidth / 2;
     const centerY = window.innerHeight / 2;
 
@@ -320,5 +379,9 @@
 
   if (image.complete && image.naturalWidth > 0) {
     fitToScreen();
+  }
+
+  if (shouldShowTutorial()) {
+    window.setTimeout(openTutorial, 420);
   }
 })();
